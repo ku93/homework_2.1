@@ -8,25 +8,21 @@ class Category:
     total_categories = 0  # Общее количество категорий
     total_products = 0  # Общее количество товаров
 
-    name: str
-    description: str
-    products: list
-
-    def __init__(self, name, description, products):
+    def __init__(self, name: str, description: str, products=None):
         self.name = name  # Название категории
         self.description = description  # Описание категории
-        self.__products = products if products else []  # Список товаров категории
-        self.total_categories += 1  # Количество товаров в данной категории
-        Category.total_products += len(products) if products else 0
+        self.__products = products if products is not None else []  # Список товаров категории
+        Category.total_categories += 1  # Увеличиваем общее количество категорий
+        Category.total_products += sum(product.quantity for product in self.__products)  # общее количество товаров
 
     def __str__(self):
         return f"{self.name}, количество продуктов: {len(self.__products)} шт."
 
-    def add_product(self, product: Product):
+    def add_product(self, product):
         """Метод для добавления товара в категорию."""
         if isinstance(product, Product):
             self.__products.append(product)
-            Category.total_products += 1
+            Category.total_products += product.quantity  # Увеличиваем общее количество товаров
             print(f"Добавлен {product.name} в категорию '{self.name}' (количество: {product.quantity}).")
         else:
             print("Ошибка: В объекте должен быть тип Product.")
@@ -46,15 +42,6 @@ class Category:
     @property
     def products_in_list(self):
         return self.__products
-
-    def __len__(self):
-        """Метод для возвращения количества продуктов в категории."""
-        return sum(product.quantity for product in self.products)
-
-    def get_product_count(self):
-        """Метод для получения общего количества продуктов в категории."""
-        return len(self)
-
 
 if __name__ == "__main__":
 

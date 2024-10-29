@@ -5,12 +5,20 @@ class Product:
     description: str
     price: float
     quantity: int
+    full_price: float
 
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name, description, price, quantity, full_price=0):
         self.name = name  # Название товара
         self.description = description  # Описание товара
         self.__price = price  # Цена товара
         self.quantity = quantity  # Количество в наличии
+        self.full_price = price
+
+    def __str__(self):
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+    def __add__(self, other):
+        return self.full_price + other.full_price
 
     @classmethod
     def new_product(cls, name, description, price, quantity):
@@ -26,11 +34,6 @@ class Product:
             print("Цена не должна быть нулевая или отрицательная")
             return
         self.__price = float(new_price)
-
-    def __str__(self):
-        return (
-            f"Product(name={self.name}, description={self.description}, price={self.price}, quantity={self.quantity})"
-        )
 
 
 if __name__ == "__main__":
@@ -58,3 +61,5 @@ if __name__ == "__main__":
     print(product1.price)
     product2.price = "1000"
     print(product2.price)
+
+    print(product1 + product2)

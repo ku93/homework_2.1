@@ -23,3 +23,11 @@ def test_product_upgread(capsys, product):
     assert product.price == 180000.0
     product.price = 1000
     assert product.price == 1000
+
+
+def test_product_str(product):
+    assert str(product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_product_add(product_full_price1, product_full_price2):
+    assert product_full_price1 + product_full_price2 == 390000.0

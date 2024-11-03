@@ -1,3 +1,4 @@
+import pytest
 from src.products import Product
 
 
@@ -17,9 +18,9 @@ def test_product_creat():
 
 
 def test_product_upgread(capsys, product):
-    product.price = "-1000"
-    messege = capsys.readouterr()
-    assert messege.out.strip() == "Цена не должна быть нулевая или отрицательная"
+    with pytest.raises(ValueError) as excinfo:
+        product.price = -1000
+    assert str(excinfo.value) == "Цена не должна быть нулевая или отрицательная"
     assert product.price == 180000.0
     product.price = 1000
     assert product.price == 1000
@@ -30,4 +31,4 @@ def test_product_str(product):
 
 
 def test_product_add(product_full_price1, product_full_price2):
-    assert product_full_price1 + product_full_price2 == 390000.0
+    assert product_full_price1 + product_full_price2 == 2580000.0

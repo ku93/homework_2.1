@@ -42,3 +42,10 @@ def test_product_iterator(product_iterator):
 
     with pytest.raises(StopIteration):
         next(product_iterator)
+
+def test_category_setter_error(category, product):
+    with pytest.raises(TypeError):
+        category.products = 1
+
+def test_category_setter_smartphone(category, smartphone1):
+       category.products = smartphone1

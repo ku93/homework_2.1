@@ -1,3 +1,6 @@
+import pytest
+
+
 def test_category_init(category):
     assert category.name == "Смартфоны"
     assert category.description == "Смартфоны, как средство не только коммуникации"
@@ -26,3 +29,16 @@ def test_category_setter(category, product):
     assert len(category.products_in_list) == 1
     category.products = product
     assert len(category.products_in_list) == 2
+
+
+def test_category_str(category):
+    assert str(category) == "Смартфоны, количество продуктов: 1 шт."
+
+
+def test_product_iterator(product_iterator):
+    iter(product_iterator)
+    assert product_iterator.index == 0
+    assert next(product_iterator).name == "Samsung Galaxy S23 Ultra"
+
+    with pytest.raises(StopIteration):
+        next(product_iterator)

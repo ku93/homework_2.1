@@ -19,6 +19,9 @@ class Category:
         self.total_categories += 1  # Количество товаров в данной категории
         Category.total_products += len(products) if products else 0
 
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {len(self.__products)} шт."
+
     def add_product(self, product: Product):
         """Метод для добавления товара в категорию."""
         if isinstance(product, Product):
@@ -32,7 +35,7 @@ class Category:
     def products(self):
         products_str = ""
         for product in self.__products:
-            products_str += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
+            products_str += f"{str(product)}\n"
         return products_str
 
     @products.setter
@@ -51,12 +54,6 @@ class Category:
     def get_product_count(self):
         """Метод для получения общего количества продуктов в категории."""
         return len(self)
-
-    def __str__(self):
-        return (
-            f"Category(name={self.name}, description={self.description},"
-            f" number of products={self.get_product_count()})"
-        )
 
 
 if __name__ == "__main__":
@@ -88,3 +85,5 @@ if __name__ == "__main__":
     print(category2.products)
     print(category2.total_categories)
     print(category2.total_products)
+
+    print(category2)

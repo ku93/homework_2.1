@@ -36,12 +36,16 @@ class Category:
 
     @products.setter
     def products(self, product: Product):
-        self.__products.append(product)
-        Category.total_categories += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.total_categories += 1
+        else:
+            raise TypeError
 
     @property
     def products_in_list(self):
         return self.__products
+
 
 if __name__ == "__main__":
 

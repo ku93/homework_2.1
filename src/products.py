@@ -12,7 +12,7 @@ class Product:
 
     def __add__(self, other):
         """Складывает полные цены двух продуктов."""
-        if isinstance(other, Product):
+        if type(other) is Product:
             return self.full_price + other.full_price
         raise TypeError("Операция сложения поддерживается только для объектов Product.")
 

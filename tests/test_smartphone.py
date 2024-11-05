@@ -11,6 +11,7 @@ def test_smartphone1_init(smartphone1):
     assert smartphone1.memory == 256
     assert smartphone1.color == "Серый"
 
+
 def test_smartphone2_init(smartphone2):
     assert smartphone2.name == "Iphone 15"
     assert smartphone2.description == "512GB, Gray space"
@@ -21,8 +22,10 @@ def test_smartphone2_init(smartphone2):
     assert smartphone2.memory == 512
     assert smartphone2.color == "Gray space"
 
+
 def test_smartphone_add(smartphone1, smartphone2):
     assert smartphone1 + smartphone2 == 2580000.0
+
 
 def test_smartphone_error(smartphone1):
     with pytest.raises(TypeError):

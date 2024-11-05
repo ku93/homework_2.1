@@ -1,11 +1,17 @@
-class Product:
+from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
+
+
+class Product(BaseProduct, PrintMixin):
     """Класс для продуктов"""
 
     def __init__(self, name: str, description: str, price: float, quantity: int):
+
         self.name = name  # Название товара
         self.description = description  # Описание товара
         self.__price = price  # Цена товара
         self.quantity = quantity  # Количество в наличии
+        super().__init__()
 
     def __str__(self):
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
@@ -15,6 +21,10 @@ class Product:
         if type(other) is Product:
             return self.full_price + other.full_price
         raise TypeError("Операция сложения поддерживается только для объектов Product.")
+
+    @classmethod
+    def new_product(cls,  name, description, price, quantity):
+        return (cls,  name, description, price, quantity)
 
     @property
     def price(self) -> float:

@@ -1,4 +1,4 @@
-from  abc import ABC, abstractmethod
+from abc import ABC, abstractmethod
 
 
 class BaseProduct(ABC):
@@ -7,4 +7,3 @@ class BaseProduct(ABC):
     @abstractmethod
     def new_product(cls, *args, **kwargs):
         pass
-

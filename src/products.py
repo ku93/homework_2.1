@@ -5,12 +5,15 @@ from src.print_mixin import PrintMixin
 class Product(BaseProduct, PrintMixin):
     """Класс для продуктов"""
 
-    def __init__(self, name: str, description: str, price: float, quantity: int):
+    def __init__(self, name: str, description: str, price: float, quantity=0):
 
         self.name = name  # Название товара
         self.description = description  # Описание товара
         self.__price = price  # Цена товара
-        self.quantity = quantity  # Количество в наличии
+        if quantity > 0:
+            self.quantity = quantity  # Количество в наличии
+        else:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         super().__init__()
 
     def __str__(self):
@@ -23,8 +26,8 @@ class Product(BaseProduct, PrintMixin):
         raise TypeError("Операция сложения поддерживается только для объектов Product.")
 
     @classmethod
-    def new_product(cls,  name, description, price, quantity):
-        return (cls,  name, description, price, quantity)
+    def new_product(cls, name, description, price, quantity):
+        return (cls, name, description, price, quantity)
 
     @property
     def price(self) -> float:
@@ -68,3 +71,5 @@ if __name__ == "__main__":
     print(product2.price)
 
     print(f"Сумма полных цен: {product1 + product2}")  # Сложение полных цен
+
+    # product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)

@@ -1,4 +1,5 @@
 from src.products import Product
+from src.exceptions import ZerroQuantityProduct
 
 
 class Category:
@@ -37,14 +38,29 @@ class Category:
     @products.setter
     def products(self, product: Product):
         if isinstance(product, Product):
-            self.__products.append(product)
-            Category.total_categories += 1
+            try:
+                if product.quantity == 0:
+                    raise ZerroQuantityProduct("Нельзя добавить продукт с нулевым количеством")
+            except ZerroQuantityProduct as e:
+                print(str(e))
+            else:
+                self.__products.append(product)
+                Category.total_categories += 1
+                print("Продукт добавлен успешно")
+            finally:
+                print("Обработка добавления продуктов завершена")
         else:
             raise TypeError
 
     @property
     def products_in_list(self):
         return self.__products
+
+    def middle_price(self):
+        try:
+            return round(sum([product.price for product in self.__products]) / len(self.__products), 2)
+        except ZeroDivisionError:
+            return 0
 
 
 if __name__ == "__main__":
@@ -78,3 +94,8 @@ if __name__ == "__main__":
     print(category2.total_products)
 
     print(category2)
+
+    print(category1.middle_price())
+
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    print(category_empty.middle_price())

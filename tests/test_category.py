@@ -1,4 +1,5 @@
 import pytest
+from src.products import Product
 
 
 def test_category_init(category):
@@ -51,3 +52,16 @@ def test_category_setter_error(category, product):
 
 def test_category_setter_smartphone(category, smartphone1):
     category.products = smartphone1
+
+
+def test_middle_price(category, empty_category):
+    assert category.middle_price() == 180000.0
+    assert empty_category.middle_price() == 0
+
+
+def test_custom_exception(capsys, category):
+    assert len(category.products_in_list) == 1
+
+    with pytest.raises(ValueError):
+        product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
+        category1.products = product_invalid

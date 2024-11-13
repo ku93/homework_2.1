@@ -1,4 +1,7 @@
 import pytest
+from pyexpat.errors import messages
+
+from src.exceptions import ZerroQuantityProduct
 from src.products import Product
 
 
@@ -59,9 +62,16 @@ def test_middle_price(category, empty_category):
     assert empty_category.middle_price() == 0
 
 
-def test_custom_exception(capsys, category):
+def test_custom_exception(capsys, category, product):
     assert len(category.products_in_list) == 1
 
-    with pytest.raises(ValueError):
-        product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
-        category1.products = product_invalid
+    with pytest.raises(ValueError) as e_info:
+        prod_add = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 0)
+        assert prod_add == "Товар с нулевым количеством не может быть добавлен"
+
+    product.quantity = 0
+    category.products = product
+    message = capsys.readouterr()
+    parts = message.out.split("\n")
+    assert parts[1] == "Нельзя добавить продукт с нулевым количеством"
+    assert parts[2] == "Обработка добавления продуктов завершена"
